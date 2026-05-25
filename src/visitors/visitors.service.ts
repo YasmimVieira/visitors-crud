@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVisitorDto } from './dto/create-visitor.dto';
 import { UpdateVisitorDto } from './dto/update-visitor.dto';
+import { Visitor } from './visitors.model';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class VisitorsService {
+  private visitors: Visitor[] = [];
+  
   create(createVisitorDto: CreateVisitorDto) {
-    return 'This action adds a new visitor';
+    const visitor: Visitor = {
+      id: randomUUID(),
+      ...createVisitorDto
+    }
+
+    this.visitors.push(visitor);
+    
+    return visitor;
   }
 
   findAll() {
-    return `This action returns all visitors`;
+    return this.visitors;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} visitor`;
+  findOne(id: string) {
+    return this.visitors.find(visitor => visitor.id === id);
   }
 
-  update(id: number, updateVisitorDto: UpdateVisitorDto) {
-    return `This action updates a #${id} visitor`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} visitor`;
+  remove(id: string) {
+    this.visitors = this.visitors.filter((visitor) => visitor.id !== id);
   }
 }

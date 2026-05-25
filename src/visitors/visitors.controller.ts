@@ -19,16 +19,11 @@ export class VisitorsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.visitorsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVisitorDto: UpdateVisitorDto) {
-    return this.visitorsService.update(+id, updateVisitorDto);
+    return this.visitorsService.findOne(id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.visitorsService.remove(+id);
+    return this.visitorsService.remove(id);
   }
 }
