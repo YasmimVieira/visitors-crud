@@ -1,13 +1,30 @@
-import {  IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateVisitorDto {
-    @IsNotEmpty()
-    @IsString()
+    @ApiProperty({
+        description: 'Nome completo do visitante',
+        example: 'João Silva Santos',
+        minLength: 3,
+        maxLength: 255
+    })
+    @IsNotEmpty({ message: 'Nome é obrigatório' })
+    @IsString({ message: 'Nome deve ser uma string' })
     name!: string;
 
-    @IsEmail()
+    @ApiProperty({
+        description: 'Endereço de email válido do visitante',
+        example: 'joao@example.com',
+        format: 'email'
+    })
+    @IsEmail({}, { message: 'Email deve ser válido' })
     email!: string;
 
-    @IsNotEmpty()
+    @ApiProperty({
+        description: 'Número de telefone do visitante',
+        example: '(11) 98765-4321',
+        pattern: '^\\(?[0-9]{2}\\)? ?9?[0-9]{4}-?[0-9]{4}$'
+    })
+    @IsNotEmpty({ message: 'Telefone é obrigatório' })
     phone!: string;
 }
