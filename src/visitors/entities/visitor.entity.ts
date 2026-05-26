@@ -29,11 +29,10 @@ export class Visitor {
     email!: string;
 
     @ApiProperty({
-        description: 'Data da visita',
-        example: '2026-05-26T10:30:00Z',
-        type: 'string',
-        format: 'date-time'
+        description: 'Telefone do visitante',
+        example: '(11) 99999-9999',
+        type: 'string'
     })
     @Column()
-    visitDate!: Date;
+    phone!: string;
 }
