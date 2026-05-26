@@ -3,6 +3,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  console.log({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  pass: process.env.DB_PASSWORD,
+  db: process.env.DB_NAME,
+  url: process.env.DATABASE_URL,
+});
   const app = await NestFactory.create(AppModule);
 
   // Configuração do Swagger
@@ -35,13 +43,5 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
   console.log(`\n🚀 Servidor rodando em http://localhost:${process.env.PORT ?? 3000}`);
   console.log(`📚 Documentação Swagger disponível em http://localhost:${process.env.PORT ?? 3000}/swagger\n`);
-  console.log({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  pass: process.env.DB_PASS,
-  db: process.env.DB_NAME,
-  url: process.env.DATABASE_URL,
-});
 }
 bootstrap();
