@@ -20,11 +20,17 @@ export class VisitorsService {
     return this.visitorsRepository.find();
   }
 
-  // findOne(id: string) {
-  //   const visitor = this.visitorsRepository.findOneBy({ id });
-  //   if (!visitor) throw new NotFoundException(`Visitor ${id} not found`);
-  //   return visitor;
-  // }
+  update(id: string, updateVisitorDto: CreateVisitorDto) {
+    return this.visitorsRepository.preload({
+      id: id,
+      ...updateVisitorDto,
+    }).then(visitor => {
+      if (!visitor) {
+        throw new NotFoundException(`Visitor with ID ${id} not found`);
+      }
+      return this.visitorsRepository.save(visitor);
+    });
+  }               
 
   remove(id: string) {
     return this.visitorsRepository.delete(id);

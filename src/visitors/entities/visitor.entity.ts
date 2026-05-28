@@ -8,8 +8,8 @@ export class Visitor {
         example: 1,
         type: 'number'
     })
-    @PrimaryGeneratedColumn()
-    id!: number;
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
 
     @ApiProperty({
         description: 'Nome completo do visitante',

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { VisitorsService } from './visitors.service';
 import { CreateVisitorDto } from './dto/create-visitor.dto';
@@ -54,30 +54,6 @@ export class VisitorsController {
     return this.visitorsService.findAll();
   }
 
-  // @Get(':id')
-  // @ApiOperation({ 
-  //   summary: 'Obter visitante por ID', 
-  //   description: 'Retorna os detalhes de um visitante específico'
-  // })
-  // @ApiParam({ 
-  //   name: 'id', 
-  //   type: 'number',
-  //   description: 'ID único do visitante',
-  //   example: 1
-  // })
-  // @ApiResponse({ 
-  //   status: 200, 
-  //   description: 'Visitante encontrado',
-  //   type: Visitor
-  // })
-  // @ApiResponse({ 
-  //   status: 404, 
-  //   description: 'Visitante não encontrado'
-  // })
-  // findOne(@Param('id') id: string) {
-  //   return this.visitorsService.findOne(id);
-  // }
-
   @Delete(':id')
   @ApiOperation({ 
     summary: 'Deletar visitante', 
@@ -99,5 +75,41 @@ export class VisitorsController {
   })
   remove(@Param('id') id: string) {
     return this.visitorsService.remove(id);
+  }
+
+  @Put(':id')
+  @ApiOperation({ 
+    summary: 'Atualizar visitante', 
+    description: 'Atualiza as informações de um visitante existente'
+  })
+  @ApiParam({ 
+    name: 'id', 
+    type: 'number',
+    description: 'ID único do visitante a ser atualizado',
+    example: 1
+  })
+  @ApiBody({ 
+    type: UpdateVisitorDto,
+    examples: {
+      example1: {
+        value: {
+          name: 'João Silva Atualizado',
+          email: 'joao.atualizado@example.com',
+          phone: '(11) 98765-4321'
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Visitante atualizado com sucesso',
+    type: Visitor
+  })
+  @ApiResponse({ 
+    status: 404, 
+    description: 'Visitante não encontrado'
+  })
+  update(@Param('id') id: string, @Body() updateVisitorDto: UpdateVisitorDto) {
+    return this.visitorsService.update(id, updateVisitorDto as unknown as CreateVisitorDto);
   }
 }
