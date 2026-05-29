@@ -35,4 +35,13 @@ export class Visitor {
     })
     @Column()
     phone!: string;
+
+    @Column()
+    quantityOfVisits!: number;
+
+    @Column({ nullable: true })
+    churchName!: string;
+
+    @Column({ type: 'date', nullable: true })
+    visitDate!: Date;
 }

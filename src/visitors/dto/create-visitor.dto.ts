@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, isNumber, IsOptional, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateVisitorDto {
@@ -27,4 +27,30 @@ export class CreateVisitorDto {
     })
     @IsNotEmpty({ message: 'Telefone é obrigatório' })
     phone!: string;
+
+    @ApiProperty({
+        description: 'Quantidade de visitas do visitante',
+        example: 5,
+        type: 'number'
+    })
+    @IsNumber()
+    quantityOfVisits!: number;
+
+    @ApiProperty({
+        description: 'Nome da igreja do visitante',
+        example: 'Igreja Batista Central'
+    })
+    @IsOptional()
+    @IsString()
+    churchName!: string;
+
+    @ApiProperty({
+        description: 'Data da visita do visitante',
+        example: '2023-10-10',
+        format: 'date'
+    })
+    @IsOptional()
+    @IsDateString()
+    visitDate!: string;
+
 }
